@@ -25,22 +25,14 @@ export function Footer() {
               soluciones logísticas integrales.
             </p>
             <div className="flex space-x-4">
-              <Link href="#" className="text-gray-500 hover:text-sulkar-green dark:hover:text-sulkar-lightgreen">
+              <Link href="https://web.facebook.com/profile.php?id=61576795193664&locale=es_LA" className="text-gray-500 hover:text-sulkar-green dark:hover:text-sulkar-lightgreen">
                 <Facebook className="h-5 w-5" />
                 <span className="sr-only">Facebook</span>
               </Link>
-              <Link href="#" className="text-gray-500 hover:text-sulkar-green dark:hover:text-sulkar-lightgreen">
+              <Link href="https://www.instagram.com/sulkar.07" className="text-gray-500 hover:text-sulkar-green dark:hover:text-sulkar-lightgreen">
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
-              </Link>
-              <Link href="#" className="text-gray-500 hover:text-sulkar-green dark:hover:text-sulkar-lightgreen">
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
-              </Link>
-              <Link href="#" className="text-gray-500 hover:text-sulkar-green dark:hover:text-sulkar-lightgreen">
-                <Linkedin className="h-5 w-5" />
-                <span className="sr-only">LinkedIn</span>
-              </Link>
+              </Link>              
             </div>
           </div>
 
