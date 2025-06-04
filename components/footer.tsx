@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react"
+import { Facebook, Instagram, CreditCard, Banknote, Coins } from "lucide-react"
 
 export function Footer() {
   return (
@@ -25,14 +25,20 @@ export function Footer() {
               soluciones logísticas integrales.
             </p>
             <div className="flex space-x-4">
-              <Link href="https://web.facebook.com/profile.php?id=61576795193664&locale=es_LA" className="text-gray-500 hover:text-sulkar-green dark:hover:text-sulkar-lightgreen">
+              <Link
+                href="https://web.facebook.com/profile.php?id=61576795193664&locale=es_LA"
+                className="text-gray-500 hover:text-sulkar-green dark:hover:text-sulkar-lightgreen"
+              >
                 <Facebook className="h-5 w-5" />
                 <span className="sr-only">Facebook</span>
               </Link>
-              <Link href="https://www.instagram.com/sulkar.07" className="text-gray-500 hover:text-sulkar-green dark:hover:text-sulkar-lightgreen">
+              <Link
+                href="https://www.instagram.com/sulkar.07"
+                className="text-gray-500 hover:text-sulkar-green dark:hover:text-sulkar-lightgreen"
+              >
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
-              </Link>              
+              </Link>
             </div>
           </div>
 
@@ -46,7 +52,7 @@ export function Footer() {
                 >
                   Nosotros
                 </Link>
-              </li>              
+              </li>
               <li>
                 <Link
                   href="/blog"
@@ -99,8 +105,30 @@ export function Footer() {
               </li>
               <li className="text-sm text-gray-600 dark:text-gray-400">
                 <strong>Email:</strong> contactosulkar@gmail.com
-              </li>              
+              </li>
             </ul>
+
+            {/* Métodos de Pago - Sección destacada */}
+            <div className="mt-6 p-4 bg-gradient-to-r from-sulkar-green/10 to-sulkar-lightgreen/10 dark:from-sulkar-green/20 dark:to-sulkar-lightgreen/20 rounded-lg border border-sulkar-green/20">
+              <h4 className="text-sm font-semibold text-sulkar-green dark:text-sulkar-lightgreen mb-3 flex items-center gap-2">
+                <CreditCard className="h-4 w-4" />
+                Métodos de Pago
+              </h4>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-xs text-gray-700 dark:text-gray-300">
+                  <CreditCard className="h-3 w-3 text-sulkar-green" />
+                  <span>Tarjetas de crédito/débito</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-gray-700 dark:text-gray-300">
+                  <Banknote className="h-3 w-3 text-sulkar-green" />
+                  <span>Transferencias bancarias</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-gray-700 dark:text-gray-300">
+                  <Coins className="h-3 w-3 text-sulkar-green" />
+                  <span>Criptomonedas (BTC, ETH, USDT)</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
