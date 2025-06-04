@@ -8,6 +8,10 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { getBlogBySlug } from "@/lib/api"
 import { notFound, useRouter } from "next/navigation"
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import rehypeHighlight from 'rehype-highlight'
+import rehypeRaw from 'rehype-raw'
 
 export default function BlogPostClient({ slug }: { slug: string }) {
   const [blog, setBlog] = useState<any>(null)
@@ -110,7 +114,75 @@ export default function BlogPostClient({ slug }: { slug: string }) {
             {/* Main Content */}
             <div className="lg:col-span-2">
               <div className="prose prose-lg dark:prose-invert max-w-none">
-                <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeHighlight, rehypeRaw]}
+                  components={{
+                    h1: ({ children }) => <h1 className="text-3xl font-bold mt-8 mb-4 text-gray-900 dark:text-white border-b pb-2">{children}</h1>,
+                    h2: ({ children }) => <h2 className="text-2xl font-semibold mt-6 mb-3 text-gray-800 dark:text-gray-100">{children}</h2>,
+                    h3: ({ children }) => <h3 className="text-xl font-medium mt-5 mb-2 text-gray-700 dark:text-gray-200">{children}</h3>,
+                    h4: ({ children }) => <h4 className="text-lg font-medium mt-4 mb-2 text-gray-700 dark:text-gray-200">{children}</h4>,
+                    p: ({ children }) => <p className="mb-4 leading-relaxed text-gray-600 dark:text-gray-300">{children}</p>,
+                    ul: ({ children }) => <ul className="list-disc list-inside mb-4 space-y-2 text-gray-600 dark:text-gray-300">{children}</ul>,
+                    ol: ({ children }) => <ol className="list-decimal list-inside mb-4 space-y-2 text-gray-600 dark:text-gray-300">{children}</ol>,
+                    li: ({ children }) => <li className="mb-1">{children}</li>,
+                    blockquote: ({ children }) => (
+                      <blockquote className="border-l-4 border-sulkar-green pl-6 py-3 my-6 bg-gray-50 dark:bg-gray-800 italic text-gray-700 dark:text-gray-300">
+                        {children}
+                      </blockquote>
+                    ),
+                    code: ({ children }) => (
+                      <code className="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono text-sulkar-green dark:text-green-400">
+                        {children}
+                      </code>
+                    ),
+                    pre: ({ children }) => (
+                      <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-6 border">
+                        {children}
+                      </pre>
+                    ),
+                    a: ({ href, children }) => (
+                      <a 
+                        href={href} 
+                        className="text-sulkar-green dark:text-green-400 hover:underline font-medium"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {children}
+                      </a>
+                    ),
+                    img: ({ src, alt }) => (
+                      <div className="my-6">
+                        <Image 
+                          src={src || "/placeholder.svg"} 
+                          alt={alt || "Imagen del blog"} 
+                          width={800}
+                          height={400}
+                          className="w-full h-auto rounded-lg shadow-lg object-cover"
+                        />
+                      </div>
+                    ),
+                    table: ({ children }) => (
+                      <div className="overflow-x-auto my-6">
+                        <table className="min-w-full border border-gray-300 dark:border-gray-600 rounded-lg">
+                          {children}
+                        </table>
+                      </div>
+                    ),
+                    th: ({ children }) => (
+                      <th className="border border-gray-300 dark:border-gray-600 px-4 py-3 bg-gray-100 dark:bg-gray-800 font-semibold text-left">
+                        {children}
+                      </th>
+                    ),
+                    td: ({ children }) => (
+                      <td className="border border-gray-300 dark:border-gray-600 px-4 py-3">
+                        {children}
+                      </td>
+                    ),
+                  }}
+                >
+                  {blog.content}
+                </ReactMarkdown>
               </div>
 
               {/* Author Bio */}
@@ -170,20 +242,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
               )}
 
               {/* Share */}
-              <div className="p-6 bg-gray-50 dark:bg-gray-900 rounded-lg">
-                <h3 className="text-lg font-bold mb-4">Compartir</h3>
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="flex-1">
-                    Twitter
-                  </Button>
-                  <Button variant="outline" size="sm" className="flex-1">
-                    Facebook
-                  </Button>
-                  <Button variant="outline" size="sm" className="flex-1">
-                    LinkedIn
-                  </Button>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>

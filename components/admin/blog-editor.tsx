@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge"
 import type { BlogPost } from "@/types/blog-post"
 import { useFormValidation } from "@/hooks/use-form-validation"
 import { Save, PlusCircle, Edit, ArrowRight, Loader2, Hash, Type, FileText, Tag, X } from "lucide-react"
+import { MarkdownEditor } from "@/components/admin/markdown-editor"
 
 interface BlogEditorProps {
   post: BlogPost | null
@@ -315,28 +316,42 @@ export const BlogEditor = memo(function BlogEditor({
               </div>
 
               <div className="flex-1 flex flex-col">
-                <Label htmlFor="content" className="mb-2">
-                  Contenido (Markdown) *
-                </Label>
-                <Textarea
-                  id="content"
+                <MarkdownEditor
                   value={post.content}
-                  onChange={(e) => handleFieldChange("content", e.target.value)}
-                  onBlur={() => handleFieldBlur("content")}
-                  placeholder="Escribe tu contenido en Markdown..."
-                  className={`flex-1 min-h-[400px] font-mono text-sm resize-none ${
-                    getFieldError("content") ? "border-red-500" : ""
-                  }`}
-                  aria-describedby={getFieldError("content") ? "content-error" : undefined}
+                  onChange={(value) => handleFieldChange("content", value)}
+                  placeholder="Escribe tu contenido aquí... Usa Markdown para dar formato:
+
+# Título Principal
+## Subtítulo  
+### Subtítulo menor
+
+**Texto en negrita** y *texto en cursiva*
+
+- Lista de elementos
+- Otro elemento
+  
+1. Lista numerada
+2. Segundo elemento
+
+> Cita importante
+
+`código inline` o:
+
+```
+bloque de código
+```
+
+[Enlace](https://ejemplo.com)
+![Imagen](https://ejemplo.com/imagen.jpg)"
+                  label="Contenido (Markdown)"
+                  className="flex-1"
                 />
-                <div className="flex justify-between items-center mt-2">
-                  {getFieldError("content") && (
-                    <p id="content-error" className="text-sm text-red-500">
-                      {getFieldError("content")}
-                    </p>
-                  )}
-                  <p className="text-xs text-gray-500 ml-auto">{post.content.length} caracteres</p>
-                </div>
+                
+                {getFieldError("content") && (
+                  <p id="content-error" className="text-sm text-red-500 mt-2">
+                    {getFieldError("content")}
+                  </p>
+                )}
               </div>
 
               {post.content.trim().length > 0 && canSave && (
