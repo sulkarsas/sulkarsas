@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Cookies</title>
+</head>
+<body>
+    <h1>Test de Cookies para Debug</h1>
+    <button onclick="setCookie()">Configurar Cookie</button>
+    <button onclick="getCookie()">Leer Cookie</button>
+    <button onclick="clearCookie()">Limpiar Cookie</button>
+    <div id="result"></div>
+
+    <script>
+        function setCookie() {
+            const testToken = "test-token-123";
+            document.cookie = `admin_token=${testToken}; path=/; max-age=86400; samesite=strict`;
+            document.getElementById('result').innerHTML = `Cookie configurada: admin_token=${testToken}`;
+            console.log("Cookie configurada:", document.cookie);
+        }
+
+        function getCookie() {
+            const cookies = document.cookie;
+            document.getElementById('result').innerHTML = `Cookies actuales: ${cookies}`;
+            console.log("Cookies:", cookies);
+        }
+
+        function clearCookie() {
+            document.cookie = "admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            document.getElementById('result').innerHTML = "Cookie limpiada";
+            console.log("Cookie limpiada");
+        }
+
+        // Auto-check al cargar
+        window.onload = function() {
+            getCookie();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 60 6% 91%; /* #f2f0df */
+    --foreground: 0 0% 5%; /* #0D0D0D */
+    --card: 60 6% 91%;
+    --card-foreground: 0 0% 5%;
+    --popover: 60 6% 91%;
+    --popover-foreground: 0 0% 5%;
+    --primary: 146 97% 23%; /* #02733E - Verde principal */
+    --primary-foreground: 60 6% 91%;
+    --secondary: 39 88% 56%; /* #F2AE2E - Amarillo/dorado */
+    --secondary-foreground: 0 0% 5%;
+    --muted: 60 6% 85%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 31 88% 56%; /* #F28A2E - Naranja */
+    --accent-foreground: 0 0% 5%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 6% 91%;
+    --border: 0 0% 80%;
+    --input: 0 0% 80%;
+    --ring: 146 97% 23%;
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 0 0% 5%; /* #0D0D0D */
+    --foreground: 60 6% 91%; /* #f2f0df */
+    --card: 0 0% 7%;
+    --card-foreground: 60 6% 91%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 60 6% 91%;
+    --primary: 146 97% 28%; /* #02733E más claro para modo oscuro */
+    --primary-foreground: 0 0% 5%;
+    --secondary: 39 88% 60%; /* #F2AE2E más claro para modo oscuro */
+    --secondary-foreground: 0 0% 5%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 31 88% 60%; /* #F28A2E más claro para modo oscuro */
+    --accent-foreground: 0 0% 5%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 6% 91%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 146 97% 28%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border transition-colors duration-300;
+  }
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading font-bold;
+  }
+}
+
+.glass-card {
+  @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-white/20 dark:border-gray-800/30 transition-colors duration-300;
+}
+
+.section-padding {
+  @apply py-16 md:py-24;
+}
+
+.container-padding {
+  @apply px-4 sm:px-6 lg:px-8;
+}
+
+.bg-radial-gradient {
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animated leaves/shapes */
+.leaf {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(5px);
+  opacity: 0.7;
+}
+
+.leaf-1 {
+  width: 150px;
+  height: 150px;
+  top: 10%;
+  left: -2%;
+  animation: float 15s ease-in-out infinite;
+}
+
+.leaf-2 {
+  width: 100px;
+  height: 100px;
+  top: 60%;
+  left: 10%;
+  animation: float 18s ease-in-out infinite 2s;
+}
+
+.leaf-3 {
+  width: 120px;
+  height: 120px;
+  top: 20%;
+  right: 5%;
+  animation: float 20s ease-in-out infinite 1s;
+}
+
+.leaf-4 {
+  width: 80px;
+  height: 80px;
+  bottom: 15%;
+  right: 15%;
+  animation: float 12s ease-in-out infinite 3s;
+}
+
+.leaf-5 {
+  width: 180px;
+  height: 180px;
+  bottom: -5%;
+  left: 40%;
+  animation: float 25s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-15px) translateX(10px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(10px) translateX(15px) rotate(-5deg);
+  }
+  75% {
+    transform: translateY(-5px) translateX(-10px) rotate(3deg);
+  }
+}
+
+/* Gradient wave animation */
+.bg-gradient-wave {
+  background: linear-gradient(
+    45deg,
+    rgba(2, 115, 62, 0.05) 0%,
+    rgba(242, 174, 46, 0.05) 25%,
+    rgba(242, 138, 46, 0.05) 50%,
+    rgba(242, 174, 46, 0.05) 75%,
+    rgba(2, 115, 62, 0.05) 100%
+  );
+  background-size: 400% 400%;
+  animation: gradientWave 15s ease infinite;
+}
+
+@keyframes gradientWave {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
