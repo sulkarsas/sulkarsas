@@ -7,7 +7,17 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Loader2, Lock, Eye, EyeOff } from "lucide-react"
+import { Loader2, Lock, Eye, EyeOff, Trash2, AlertTriangle } from "lucide-react"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 export default function AdminSimplePage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -17,6 +27,9 @@ export default function AdminSimplePage() {
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState("")
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [blogToDelete, setBlogToDelete] = useState<any>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
   const router = useRouter()
 
   // Verificar autenticación al cargar
@@ -90,6 +103,43 @@ export default function AdminSimplePage() {
     router.push("/")
   }
 
+  const handleDeleteBlog = async (blogId: string, blogTitle: string) => {
+    setBlogToDelete({ id: blogId, title: blogTitle })
+    setDeleteDialogOpen(true)
+  }
+
+  const confirmDelete = async () => {
+    if (!blogToDelete) return
+    
+    setIsDeleting(true)
+    try {
+      const token = localStorage.getItem("admin_token")
+      const response = await fetch(`/api/admin/blogs/${blogToDelete.id}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+
+      if (response.ok) {
+        console.log("✅ Blog eliminado exitosamente")
+        // Trigger a refresh of the AdminPanel component
+        window.location.reload()
+      } else {
+        const errorData = await response.json()
+        setError(errorData.message || "Error al eliminar el blog")
+      }
+    } catch (error) {
+      console.error("❌ Error eliminando blog:", error)
+      setError("Error de conexión al eliminar el blog")
+    } finally {
+      setIsDeleting(false)
+      setDeleteDialogOpen(false)
+      setBlogToDelete(null)
+    }
+  }
+
   // Loading inicial
   if (isLoading) {
     return (
@@ -128,7 +178,59 @@ export default function AdminSimplePage() {
           </div>
           
           {/* Panel principal */}
-          <AdminPanel onClose={handleLogout} />
+          <AdminPanel onClose={handleLogout} onDeleteBlog={handleDeleteBlog} />
+
+          {/* Dialog de confirmación para eliminar */}
+          <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className="flex items-center gap-2">
+                  <AlertTriangle className="h-5 w-5 text-red-500" />
+                  Confirmar Eliminación
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  ¿Estás seguro de que quieres eliminar el blog{" "}
+                  <span className="font-semibold">"{blogToDelete?.title}"</span>?
+                  <br />
+                  <span className="text-red-600 font-medium">
+                    Esta acción no se puede deshacer.
+                  </span>
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel disabled={isDeleting}>
+                  Cancelar
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={confirmDelete}
+                  disabled={isDeleting}
+                  className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+                >
+                  {isDeleting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Eliminando...
+                    </>
+                  ) : (
+                    <>
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Eliminar Blog
+                    </>
+                  )}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
+          {/* Mostrar errores */}
+          {error && (
+            <div className="fixed bottom-4 right-4 bg-red-600 text-white p-4 rounded-lg shadow-lg">
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4" />
+                {error}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     )
@@ -213,31 +315,7 @@ export default function AdminSimplePage() {
             </Button>
           </form>
 
-          {/* Información de ayuda */}
-          <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-            <h4 className="font-medium text-green-900 dark:text-green-100 mb-2">
-              ✅ SOLUCIÓN COMPLETADA
-            </h4>
-            <div className="text-sm text-green-800 dark:text-green-200 space-y-1">
-              <p>Usuario: <code className="bg-green-100 dark:bg-green-800 px-1 rounded">admin</code></p>
-              <p>Contraseña: <code className="bg-green-100 dark:bg-green-800 px-1 rounded">sulkar2024</code></p>
-              <p className="mt-2 font-medium">🎯 Acceso directo sin redirecciones complejas</p>
-            </div>
-          </div>
-
-          {/* Características del panel */}
-          <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-            <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">
-              🛠️ Funcionalidades disponibles
-            </h4>
-            <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
-              <li>• ✍️ Crear y editar posts de blog</li>
-              <li>• 📸 Subir y gestionar imágenes</li>
-              <li>• 👀 Vista previa en tiempo real</li>
-              <li>• 🏷️ Gestión de categorías y etiquetas</li>
-              <li>• 🚀 Sin problemas de redirección</li>
-            </ul>
-          </div>
+         
         </CardContent>
       </Card>
     </div>

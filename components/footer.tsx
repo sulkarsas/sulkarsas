@@ -101,7 +101,7 @@ export function Footer() {
                 <strong>Dirección:</strong> Calle 8 Sur #12-116, Guadalajara de Buga (V)
               </li>
               <li className="text-sm text-gray-600 dark:text-gray-400">
-                <strong>Teléfono:</strong> 317 362 3505
+                <strong>Teléfono:</strong> 316 3141622
               </li>
               <li className="text-sm text-gray-600 dark:text-gray-400">
                 <strong>Email:</strong> contactosulkar@gmail.com

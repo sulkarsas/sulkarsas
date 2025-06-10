@@ -62,7 +62,7 @@ ${mensaje}
 Gracias por contactarnos. Un representante se pondrá en contacto con usted pronto.`
 
         // Send to WhatsApp
-        const phone = "573173623505"
+        const phone = "573163141622"
         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(formattedMessage)}`, "_blank")
 
         // Resetear el formulario si fue exitoso
@@ -212,7 +212,7 @@ Gracias por contactarnos. Un representante se pondrá en contacto con usted pron
                   </div>
                   <div>
                     <h3 className="text-lg font-bold mb-1">Teléfono</h3>
-                    <p className="text-gray-600 dark:text-gray-400">3173623505</p>
+                    <p className="text-gray-600 dark:text-gray-400">316 3141622</p>
                   </div>
                 </div>
 

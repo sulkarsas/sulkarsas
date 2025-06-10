@@ -148,7 +148,7 @@ export default function TermsAndConditionsPage() {
             <p>Si tiene alguna pregunta sobre estos Términos y Condiciones, por favor contáctenos:</p>
             <ul>
               <li>Por correo electrónico: contactosulkar@gmail.com</li>
-              <li>Por teléfono: 317 362 3505</li>
+              <li>Por teléfono: 316 3141622</li>
               <li>Por correo postal: Calle 8 Sur #12-116, Guadalajara de Buga (V)</li>
             </ul>
 

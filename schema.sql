@@ -247,7 +247,7 @@ VALUES (
 INSERT INTO site_settings (key, value, description)
 VALUES 
     ('contact_info', 
-     '{"address": "Calle 8 Sur #12-116, Guadalajara de Buga (V), Colombia", "phone": "3173623505", "email": "contactosulkar@gmail.com"}',
+     '{"address": "Calle 8 Sur #12-116, Guadalajara de Buga (V), Colombia", "phone": "3163141622", "email": "contactosulkar@gmail.com"}',
      'Información de contacto de la empresa'
     ),
     ('social_media',

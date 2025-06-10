@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 
 export function WhatsAppButton() {
   const [showTooltip, setShowTooltip] = useState(false)
-  const phoneNumber = "+573173623505"
+  const phoneNumber = "+573163141622"
   const whatsappUrl = `https://wa.me/${phoneNumber}`
 
   // Mostrar el tooltip brevemente al cargar la página y luego ocultarlo
